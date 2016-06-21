@@ -32,7 +32,7 @@
  * Runs forever outputting all changes to the users home directory to the
  * standard output (via NSLog()).
  *
- * The CDEventsTestAppController implements the CDEventsDelegate protocol and
+ * The CDEventsTestAppController implements the CDEventsManagerDelegate protocol and
  * when it receives any event notificaitons it just echos it to the standard
  * output.
  */

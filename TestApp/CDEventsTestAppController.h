@@ -27,13 +27,13 @@
  */
 
 #import <Foundation/Foundation.h>
-#import <CDEvents/CDEventsDelegate.h>
+#import <CDEvents/CDEventsManagerDelegate.h>
 
-@class CDEvents;
+@class CDEventsManager;
 
 
-@interface CDEventsTestAppController : NSObject <CDEventsDelegate> {
-	CDEvents				*_events;
+@interface CDEventsTestAppController : NSObject <CDEventsManagerDelegate> {
+	CDEventsManager				*_events;
 }
 
 - (void)run;

@@ -27,45 +27,45 @@
  */
 
 /**
- * @headerfile CDEventsDelegate.h CDEvents/CDEventsDelegate.h
+ * @headerfile CDEventsManagerDelegate.h CDEvents/CDEventsManagerDelegate.h
 
  * 
- * A protocol that that delegates of CDEvents conform to. Inspired and based
+ * A protocol that that delegates of CDEventsManager conform to. Inspired and based
  * upon the open source project SCEvents created by Stuart Connolly
  * http://stuconnolly.com/projects/code/
  */
 
-@class CDEvents;
+@class CDEventsManager;
 @class CDEvent;
 
 
 /**
- * The CDEventsDelegate protocol defines the required methods implemented by delegates of CDEvents objects.
+ * The CDEventsManagerDelegate protocol defines the required methods implemented by delegates of CDEvents objects.
  *
- * @see CDEvents
+ * @see CDEventsManager
  * @see CDEvent
  *
  * @since 1.0.0
  */
-@protocol CDEventsDelegate
+@protocol CDEventsManagerDelegate
 
 @required
 /**
- * The method called by the <code>CDEvents</code> object on its delegate object.
+ * The method called by the <code>CDEventsManager</code> object on its delegate object.
  *
- * @param URLWatcher The <code>CDEvents</code> object which the event was recieved thru.
+ * @param URLWatcher The <code>CDEventsManager</code> object which the event was recieved thru.
  * @param event The event data.
  *
- * @see CDEvents
+ * @see CDEventsManager
  * @see CDEvent
  *
  * @discussion Conforming objects' implementation of this method will be called
- * whenever an event occurs. The instance of CDEvents which received the event
+ * whenever an event occurs. The instance of CDEventsManager which received the event
  * and the event itself are passed as parameters.
  *
  * @since 1.0.0
  */
-- (void)URLWatcher:(CDEvents *)URLWatcher eventOccurred:(CDEvent *)event;
+- (void)eventsManager:(CDEventsManager *)URLWatcher eventOccurred:(CDEvent *)event;
 
 @end
 

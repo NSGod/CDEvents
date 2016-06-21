@@ -26,9 +26,17 @@
  * OTHER DEALINGS IN THE SOFTWARE.
  */
 
-#import "CDEvents.h"
+#import "CDEventsManager.h"
+#import "CDEventsManagerDelegate.h"
 
-#import "CDEventsDelegate.h"
+
+#define MD_DEBUG 1
+
+#if MD_DEBUG
+#define MDLog(...) NSLog(__VA_ARGS__)
+#else
+#define MDLog(...)
+#endif
 
 #ifndef __has_feature
 	#define __has_feature(x) 0
@@ -58,7 +66,7 @@ const CDEventIdentifier kCDEventsSinceEventNow = kFSEventStreamEventIdSinceNow;
 #pragma mark -
 #pragma mark Private API
 // Private API
-@interface CDEvents () {
+@interface CDEventsManager () {
 @private
 	CDEventsEventBlock                          _eventBlock;
 	
@@ -89,7 +97,7 @@ static void CDEventsCallback(
 
 #pragma mark -
 #pragma mark Implementation
-@implementation CDEvents
+@implementation CDEventsManager
 
 #pragma mark Properties
 @synthesize delegate						= _delegate;
@@ -125,7 +133,7 @@ static void CDEventsCallback(
 	[super finalize];
 }
 
-- (id)initWithURLs:(NSArray *)URLs delegate:(id<CDEventsDelegate>)delegate
+- (id)initWithURLs:(NSArray *)URLs delegate:(id<CDEventsManagerDelegate>)delegate
 {
 	return [self initWithURLs:URLs
 					 delegate:delegate
@@ -133,7 +141,7 @@ static void CDEventsCallback(
 }
 
 - (id)initWithURLs:(NSArray *)URLs
-			delegate:(id<CDEventsDelegate>)delegate
+			delegate:(id<CDEventsManagerDelegate>)delegate
 		   onRunLoop:(NSRunLoop *)runLoop
 {
 	return [self initWithURLs:URLs
@@ -147,7 +155,7 @@ static void CDEventsCallback(
 }
 
 - (id)initWithURLs:(NSArray *)URLs
-		  delegate:(id<CDEventsDelegate>)delegate
+		  delegate:(id<CDEventsManagerDelegate>)delegate
 		 onRunLoop:(NSRunLoop *)runLoop
 sinceEventIdentifier:(CDEventIdentifier)sinceEventIdentifier
 notificationLantency:(CFTimeInterval)notificationLatency
@@ -160,12 +168,16 @@ streamCreationFlags:(CDEventsEventStreamCreationFlags)streamCreationFlags
 					format:@"Invalid arguments passed to CDEvents init-method."];
 	}
 	
+	MDLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+	
 	_delegate = delegate;
 	
 	return [self initWithURLs:URLs
-						block:^(CDEvents *watcher, CDEvent *event){
-							if ([(id)[watcher delegate] conformsToProtocol:@protocol(CDEventsDelegate)]) {
-								[[watcher delegate] URLWatcher:watcher eventOccurred:event];
+						block:^(CDEventsManager *watcher, CDEvent *event){
+//							MDLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+							
+							if ([(id)[watcher delegate] conformsToProtocol:@protocol(CDEventsManagerDelegate)]) {
+								[[watcher delegate] eventsManager:watcher eventOccurred:event];
 							}
 						}
 					onRunLoop:runLoop
@@ -212,6 +224,8 @@ streamCreationFlags:(CDEventsEventStreamCreationFlags)streamCreationFlags
 	}
 	
 	if ((self = [super init])) {
+		MDLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+		
 		_watchedURLs = [URLs copy];
 		_excludedURLs = [exludeURLs copy];
 		_eventBlock = block;
@@ -242,7 +256,7 @@ streamCreationFlags:(CDEventsEventStreamCreationFlags)streamCreationFlags
 #pragma mark NSCopying method
 - (id)copyWithZone:(NSZone *)zone
 {
-	CDEvents *copy = [[CDEvents alloc] initWithURLs:[self watchedURLs]
+	CDEventsManager *copy = [[CDEventsManager alloc] initWithURLs:[self watchedURLs]
 											  block:[self eventBlock]
 										  onRunLoop:[NSRunLoop currentRunLoop]
 							   sinceEventIdentifier:[self sinceEventIdentifier]
@@ -336,12 +350,14 @@ static void CDEventsCallback(
 	const FSEventStreamEventFlags eventFlags[],
 	const FSEventStreamEventId eventIds[])
 {
-	CDEvents *watcher			= (__bridge CDEvents *)callbackCtxInfo;
+	CDEventsManager *eventsManager			= (__bridge CDEventsManager *)callbackCtxInfo;
 	NSArray *eventPathsArray	= (__bridge NSArray *)eventPaths;
-	NSArray *watchedURLs		= [watcher watchedURLs];
-	NSArray *excludedURLs		= [watcher excludedURLs];
+	NSArray *watchedURLs		= [eventsManager watchedURLs];
+	NSArray *excludedURLs		= [eventsManager excludedURLs];
 	CDEvent *lastEvent			= nil;
 
+//	NSLog(@"HERE");
+	
 	for (NSUInteger i = 0; i < numEvents; ++i) {
 		BOOL shouldIgnore = NO;
 		FSEventStreamEventFlags flags = eventFlags[i];
@@ -349,11 +365,12 @@ static void CDEventsCallback(
 		
 		// We do this hackery to ensure that the eventPath string doesn't
 		// contain any trailing slash.
+		
 		NSURL *eventURL		= [NSURL fileURLWithPath:[[eventPathsArray objectAtIndex:i] stringByStandardizingPath]];
 		NSString *eventPath	= [eventURL path];
 		
 		// Ignore all events except for the URLs we are explicitly watching.
-		if ([watcher ignoreEventsFromSubDirectories]) {
+		if ([eventsManager ignoreEventsFromSubDirectories]) {
 			shouldIgnore = YES;
 			for (NSURL *url in watchedURLs) {
 				if ([[url path] isEqualToString:eventPath]) {
@@ -373,16 +390,16 @@ static void CDEventsCallback(
 		}
 		
 		if (!shouldIgnore) {
-			CDEvent *event = [[CDEvent alloc] initWithIdentifier:identifier date:[NSDate date] URL:eventURL flags:flags];
+			CDEvent *event = [[CDEvent alloc] initWithIdentifier:identifier date:[NSDate date] URL:[NSURL fileURLWithPath:eventPath] flags:flags];
 			lastEvent = event;
 			
-			CDEventsEventBlock eventBlock = [watcher eventBlock];
-			eventBlock(watcher, event);
+			CDEventsEventBlock eventBlock = [eventsManager eventBlock];
+			eventBlock(eventsManager, event);
 		}
 	}
 	
 	if (lastEvent) {
-		[watcher setLastEvent:lastEvent];
+		[eventsManager setLastEvent:lastEvent];
 	}
 }
 

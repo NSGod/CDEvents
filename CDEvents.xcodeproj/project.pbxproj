@@ -13,13 +13,14 @@
 		9C6D03041166AFFA00343E46 /* CDEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6D03021166AFFA00343E46 /* CDEvent.m */; };
 		9C6D033D1166B32000343E46 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C6D033C1166B32000343E46 /* Foundation.framework */; };
 		9C6D04451166B35700343E46 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9C6D04441166B35700343E46 /* CoreServices.framework */; };
-		9C6D051D1166BD5800343E46 /* CDEventsDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 9C6D051C1166BD5800343E46 /* CDEventsDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9C6D05241166BF5300343E46 /* CDEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = 9C6D05221166BF5300343E46 /* CDEvents.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		9C6D05251166BF5300343E46 /* CDEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6D05231166BF5300343E46 /* CDEvents.m */; };
+		9C6D051D1166BD5800343E46 /* CDEventsManagerDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 9C6D051C1166BD5800343E46 /* CDEventsManagerDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9C6D05241166BF5300343E46 /* CDEventsManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 9C6D05221166BF5300343E46 /* CDEventsManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9C6D05251166BF5300343E46 /* CDEventsManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6D05231166BF5300343E46 /* CDEventsManager.m */; };
 		9C6D06851167CC8600343E46 /* CDEvents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* CDEvents.framework */; };
 		9C6D06881167CCBD00343E46 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6D06871167CCBD00343E46 /* main.m */; };
 		9C6D06B01167CE2000343E46 /* CDEventsTestAppController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9C6D06AF1167CE2000343E46 /* CDEventsTestAppController.m */; };
-		9C6D06B91167CE8C00343E46 /* CDEvents.framework in Copy Bundle Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* CDEvents.framework */; };
+		9C6D06B91167CE8C00343E46 /* CDEvents.framework in Copy Bundle Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* CDEvents.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		C15EE3FE19F95C5300040964 /* CDEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = C15EE3FD19F95C5300040964 /* CDEvents.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,14 +59,15 @@
 		9C6D03021166AFFA00343E46 /* CDEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEvent.m; sourceTree = "<group>"; };
 		9C6D033C1166B32000343E46 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		9C6D04441166B35700343E46 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
-		9C6D051C1166BD5800343E46 /* CDEventsDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEventsDelegate.h; sourceTree = "<group>"; };
-		9C6D05221166BF5300343E46 /* CDEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEvents.h; sourceTree = "<group>"; };
-		9C6D05231166BF5300343E46 /* CDEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEvents.m; sourceTree = "<group>"; };
+		9C6D051C1166BD5800343E46 /* CDEventsManagerDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEventsManagerDelegate.h; sourceTree = "<group>"; };
+		9C6D05221166BF5300343E46 /* CDEventsManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEventsManager.h; sourceTree = "<group>"; };
+		9C6D05231166BF5300343E46 /* CDEventsManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEventsManager.m; sourceTree = "<group>"; };
 		9C6D067D1167CC7400343E46 /* CDEventsTestApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CDEventsTestApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9C6D067F1167CC7400343E46 /* CDEventsTestApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CDEventsTestApp-Info.plist"; sourceTree = "<group>"; };
+		9C6D067F1167CC7400343E46 /* CDEventsTestApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "CDEventsTestApp-Info.plist"; path = "../CDEventsTestApp-Info.plist"; sourceTree = "<group>"; };
 		9C6D06871167CCBD00343E46 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		9C6D06AE1167CE2000343E46 /* CDEventsTestAppController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEventsTestAppController.h; sourceTree = "<group>"; };
 		9C6D06AF1167CE2000343E46 /* CDEventsTestAppController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CDEventsTestAppController.m; sourceTree = "<group>"; };
+		C15EE3FD19F95C5300040964 /* CDEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDEvents.h; sourceTree = "<group>"; };
 		D2F7E79907B2D74100F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -108,7 +110,6 @@
 				9C6D06861167CC8E00343E46 /* TestApp */,
 				0867D69AFE84028FC02AAC07 /* External Frameworks and Libraries */,
 				034768DFFF38A50411DB9C8B /* Products */,
-				9C6D067F1167CC7400343E46 /* CDEventsTestApp-Info.plist */,
 			);
 			name = CDEvents;
 			sourceTree = "<group>";
@@ -134,11 +135,12 @@
 		08FB77AEFE84172EC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				C15EE3FD19F95C5300040964 /* CDEvents.h */,
 				9C6D03011166AFFA00343E46 /* CDEvent.h */,
 				9C6D03021166AFFA00343E46 /* CDEvent.m */,
-				9C6D05221166BF5300343E46 /* CDEvents.h */,
-				9C6D05231166BF5300343E46 /* CDEvents.m */,
-				9C6D051C1166BD5800343E46 /* CDEventsDelegate.h */,
+				9C6D05221166BF5300343E46 /* CDEventsManager.h */,
+				9C6D05231166BF5300343E46 /* CDEventsManager.m */,
+				9C6D051C1166BD5800343E46 /* CDEventsManagerDelegate.h */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -177,6 +179,7 @@
 				9C6D06871167CCBD00343E46 /* main.m */,
 				9C6D06AE1167CE2000343E46 /* CDEventsTestAppController.h */,
 				9C6D06AF1167CE2000343E46 /* CDEventsTestAppController.m */,
+				9C6D067F1167CC7400343E46 /* CDEventsTestApp-Info.plist */,
 			);
 			path = TestApp;
 			sourceTree = "<group>";
@@ -188,9 +191,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C15EE3FE19F95C5300040964 /* CDEvents.h in Headers */,
 				9C6D03031166AFFA00343E46 /* CDEvent.h in Headers */,
-				9C6D051D1166BD5800343E46 /* CDEventsDelegate.h in Headers */,
-				9C6D05241166BF5300343E46 /* CDEvents.h in Headers */,
+				9C6D051D1166BD5800343E46 /* CDEventsManagerDelegate.h in Headers */,
+				9C6D05241166BF5300343E46 /* CDEventsManager.h in Headers */,
 				6A05775A1400F49900BF73C4 /* compat.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -242,7 +246,7 @@
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0610;
 				ORGANIZATIONNAME = "Aron Cedercrantz";
 			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "CDEvents" */;
@@ -290,7 +294,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C6D03041166AFFA00343E46 /* CDEvent.m in Sources */,
-				9C6D05251166BF5300343E46 /* CDEvents.m in Sources */,
+				9C6D05251166BF5300343E46 /* CDEventsManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,14 +340,12 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_MODEL_TUNING = "";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = CDEvents_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "@loader_path/../Frameworks";
+				INSTALL_PATH = "@rpath/";
 				PRODUCT_NAME = CDEvents;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -355,17 +357,14 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = YES;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
-				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_MODEL_TUNING = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = CDEvents_Prefix.pch;
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				INFOPLIST_FILE = Info.plist;
-				INSTALL_PATH = "@loader_path/../Frameworks";
+				INSTALL_PATH = "@rpath/";
 				PRODUCT_NAME = CDEvents;
 				WRAPPER_EXTENSION = framework;
 			};
@@ -374,42 +373,63 @@
 		1DEB91B208733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = YES;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx;
+				STRIP_INSTALLED_PRODUCT = NO;
 			};
 			name = Debug;
 		};
 		1DEB91B308733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_POSTPROCESSING = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_SSE3_EXTENSIONS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = macosx;
+				STRIP_STYLE = "non-global";
 			};
 			name = Release;
 		};
@@ -420,8 +440,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_MODEL_TUNING = "";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
@@ -436,7 +454,6 @@
 					AppKit,
 				);
 				PRODUCT_NAME = CDEventsTestApp;
-				ZERO_LINK = NO;
 			};
 			name = Debug;
 		};
@@ -447,8 +464,6 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_OBJC_GC = unsupported;
-				GCC_MODEL_TUNING = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
 				GCC_PREPROCESSOR_DEFINITIONS = "";
@@ -462,7 +477,6 @@
 					AppKit,
 				);
 				PRODUCT_NAME = CDEventsTestApp;
-				ZERO_LINK = NO;
 			};
 			name = Release;
 		};

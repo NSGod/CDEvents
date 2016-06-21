@@ -28,7 +28,7 @@
 #import "CDEventsTestAppController.h"
 
 #import <CDEvents/CDEvent.h>
-#import <CDEvents/CDEvents.h>
+#import <CDEvents/CDEventsManager.h>
 
 
 #define CD_EVENTS_TEST_APP_USE_BLOCKS_API				1
@@ -73,8 +73,8 @@ bool systemVersionIsAtLeast(SInt32 major, SInt32 minor)
     }
 
 #if CD_EVENTS_TEST_APP_USE_BLOCKS_API
-	_events = [[CDEvents alloc] initWithURLs:watchedURLs
-									   block:^(CDEvents *watcher, CDEvent *event){ NSLog(@"[Block] URLWatcher: %@\nEvent: %@", watcher, event); }
+	_events = [[CDEventsManager alloc] initWithURLs:watchedURLs
+									   block:^(CDEventsManager *watcher, CDEvent *event){ NSLog(@"[Block] URLWatcher: %@\nEvent: %@", watcher, event); }
 								   onRunLoop:[NSRunLoop currentRunLoop]
 						sinceEventIdentifier:kCDEventsSinceEventNow
 						notificationLantency:CD_EVENTS_DEFAULT_NOTIFICATION_LATENCY
@@ -82,7 +82,7 @@ bool systemVersionIsAtLeast(SInt32 major, SInt32 minor)
 								 excludeURLs:excludeURLs
 						 streamCreationFlags:creationFlags];
 #else
-	_events = [[CDEvents alloc] initWithURLs:watchedURLs
+	_events = [[CDEventsManager alloc] initWithURLs:watchedURLs
 									delegate:self
 								   onRunLoop:[NSRunLoop currentRunLoop]
 						sinceEventIdentifier:kCDEventsSinceEventNow
@@ -106,7 +106,7 @@ bool systemVersionIsAtLeast(SInt32 major, SInt32 minor)
 	[super dealloc];
 }
 
-- (void)URLWatcher:(CDEvents *)urlWatcher eventOccurred:(CDEvent *)event
+- (void)eventsManager:(CDEventsManager *)urlWatcher eventOccurred:(CDEvent *)event
 {
 	NSLog(@"[Delegate] URLWatcher: %@\nEvent: %@", urlWatcher, event);
 }

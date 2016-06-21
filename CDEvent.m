@@ -131,15 +131,34 @@ FLAG_PROPERTY(isDir,                        kFSEventStreamEventFlagItemIsDir)
 FLAG_PROPERTY(isSymlink,                    kFSEventStreamEventFlagItemIsSymlink)
 
 #pragma mark Misc
-- (NSString *)description
-{
-	return [NSString stringWithFormat:@"<%@: %p { identifier = %ld, URL = %@, flags = %ld, date = %@ }>",
-			[self className],
-			self,
-			(unsigned long)[self identifier],
-			[self URL],
-			(unsigned long)[self flags],
-			[self date]];
+- (NSString *)description {
+	NSMutableString *description = [NSMutableString stringWithFormat:@"%@, ", [super description]];
+	[description appendFormat:@" \"%@\", ", [self URL].path];
+//	[description appendFormat:@"identifier == %lu, ", (unsigned long)[self identifier]];
+	[description appendFormat:@"flags == %lu, ", (unsigned long)[self flags]];
+	
+	if ([self mustRescanSubDirectories]) [description appendString:@"mustRescanSubDirectories == YES, "];
+	if ([self isUserDropped]) [description appendString:@"isUserDropped == YES, "];
+	if ([self isKernelDropped]) [description appendString:@"isKernelDropped == YES, "];
+	if ([self isEventIdentifiersWrapped]) [description appendString:@"isEventIdentifiersWrapped == YES, "];
+	if ([self isHistoryDone]) [description appendString:@"isHistoryDone == YES, "];
+	if ([self isRootChanged]) [description appendString:@"isRootChanged == YES, "];
+	if ([self didVolumeMount]) [description appendString:@"didVolumeMount == YES, "];
+	if ([self didVolumeUnmount]) [description appendString:@"didVolumeUnmount == YES, "];
+	
+	if ([self isCreated]) [description appendString:@"isCreated == YES, "];
+	if ([self isRemoved]) [description appendString:@"isRemoved == YES, "];
+	if ([self isInodeMetadataModified]) [description appendString:@"isInodeMetadataModified == YES, "];
+	if ([self isRenamed]) [description appendString:@"isRenamed == YES, "];
+	if ([self isModified]) [description appendString:@"isModified == YES, "];
+	if ([self isFinderInfoModified]) [description appendString:@"isFinderInfoModified == YES, "];
+	if ([self didChangeOwner]) [description appendString:@"didChangeOwner == YES, "];
+	if ([self isXattrModified]) [description appendString:@"isXattrModified == YES, "];
+	if ([self isFile]) [description appendString:@"isFile == YES, "];
+	if ([self isDir]) [description appendString:@"isDir == YES, "];
+	if ([self isSymlink]) [description appendString:@"isSymlink == YES"];
+	
+	return description;
 }
 
 @end
