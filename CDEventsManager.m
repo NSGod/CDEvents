@@ -365,19 +365,18 @@ static void CDEventsCallback(
 		
 		// We do this hackery to ensure that the eventPath string doesn't
 		// contain any trailing slash.
+		NSString *eventPath = [[eventPathsArray objectAtIndex:i] stringByStandardizingPath];
+		NSString *eventParentDirPath = [eventPath stringByDeletingLastPathComponent];
 		
-		NSURL *eventURL		= [NSURL fileURLWithPath:[[eventPathsArray objectAtIndex:i] stringByStandardizingPath]];
-		NSString *eventPath	= [eventURL path];
-		
-		// Ignore all events except for the URLs we are explicitly watching.
 		if ([eventsManager ignoreEventsFromSubDirectories]) {
 			shouldIgnore = YES;
-			for (NSURL *url in watchedURLs) {
-				if ([[url path] isEqualToString:eventPath]) {
+			for (NSURL *watchedURL in watchedURLs) {
+				if ([watchedURL.path isEqualToString:eventParentDirPath]) {
 					shouldIgnore = NO;
 					break;
 				}
 			}
+			
 		// Ignore all explicitly excludeded URLs (not required to check if we
 		// ignore all events from sub-directories).
 		} else if (excludedURLs != nil) {
