@@ -38,6 +38,7 @@
 @class CDEventsManager;
 @class CDEvent;
 
+NS_ASSUME_NONNULL_BEGIN
 
 /**
  * The CDEventsManagerDelegate protocol defines the required methods implemented by delegates of CDEvents objects.
@@ -65,7 +66,8 @@
  *
  * @since 1.0.0
  */
-- (void)eventsManager:(CDEventsManager *)URLWatcher eventOccurred:(CDEvent *)event;
+- (void)eventsManager:(CDEventsManager *)aManager eventOccurred:(CDEvent *)event;
 
 @end
 
+NS_ASSUME_NONNULL_END

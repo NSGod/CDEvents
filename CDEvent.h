@@ -38,6 +38,9 @@
 #import <Foundation/Foundation.h>
 #import <CoreServices/CoreServices.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
+
 #pragma mark -
 #pragma mark CDEvent types
 /**
@@ -381,7 +384,7 @@ typedef FSEventStreamEventFlags CDEventFlags;
  *
  * @since 1.0.0
  */
-+ (CDEvent *)eventWithIdentifier:(NSUInteger)identifier
++ (instancetype)eventWithIdentifier:(NSUInteger)identifier
 							date:(NSDate *)date
 							 URL:(NSURL *)URL
 						   flags:(CDEventFlags)flags;
@@ -400,9 +403,12 @@ typedef FSEventStreamEventFlags CDEventFlags;
  *
  * @since 1.0.0
  */
-- (id)initWithIdentifier:(NSUInteger)identifier
+- (instancetype)initWithIdentifier:(NSUInteger)identifier
 					date:(NSDate *)date
 					 URL:(NSURL *)URL
-				   flags:(CDEventFlags)flags;
+				   flags:(CDEventFlags)flags NS_DESIGNATED_INITIALIZER;
 
 @end
+
+NS_ASSUME_NONNULL_END
+

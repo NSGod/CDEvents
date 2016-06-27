@@ -40,6 +40,8 @@
 
 #import "CDEvent.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @protocol CDEventsManagerDelegate;
 
 
@@ -72,12 +74,16 @@ extern NSString *const CDEventsEventStreamCreationFailureException;
  */
 #define CD_EVENTS_DEFAULT_NOTIFICATION_LATENCY			((NSTimeInterval)3.0)
 
+extern const NSTimeInterval kCDEventsDefaultNotificationLatency;
+
 /**
  * The default value whether events from sub directories should be ignored or not.
  *
  * @since 1.0.0
  */
 #define CD_EVENTS_DEFAULT_IGNORE_EVENT_FROM_SUB_DIRS	NO
+
+extern const BOOL kCDEventsDefaultIgnoreEventFromSubDirs;
 
 /**
  * The default event stream creation flags.
@@ -177,7 +183,7 @@ typedef void (^CDEventsEventBlock)(CDEventsManager *watcher, CDEvent *event);
  *
  * @since 1.0.0
  */
-@property (copy, readonly) NSArray					*watchedURLs;
+@property (copy, readonly) NSArray<NSURL *>			*watchedURLs;
 
 
 /** @name Configuring the Event watcher */
@@ -189,7 +195,7 @@ typedef void (^CDEventsEventBlock)(CDEventsManager *watcher, CDEvent *event);
  *
  * @since 1.0.0
  */
-@property (copy) NSArray							*excludedURLs;
+@property (nullable, copy) NSArray<NSURL *>			*excludedURLs;
 
 /**
  * Wheter events from sub-directories of the watched URLs should be ignored or not.
@@ -244,7 +250,7 @@ typedef void (^CDEventsEventBlock)(CDEventsManager *watcher, CDEvent *event);
  *
  * @since 1.0.0
  */
-- (id)initWithURLs:(NSArray *)URLs delegate:(id<CDEventsManagerDelegate>)delegate;
+- (instancetype)initWithURLs:(NSArray<NSURL *> *)URLs delegate:(id<CDEventsManagerDelegate>)delegate;
 
 /**
  * Returns an <code>CDEventsManager</code> object initialized with the given URLs to watch and schedules the watcher on the given run loop.
@@ -272,9 +278,9 @@ typedef void (^CDEventsEventBlock)(CDEventsManager *watcher, CDEvent *event);
  *
  * @since 1.0.0
  */
-- (id)initWithURLs:(NSArray *)URLs
-			delegate:(id<CDEventsManagerDelegate>)delegate
-		  onRunLoop:(NSRunLoop *)runLoop;
+- (instancetype)initWithURLs:(NSArray<NSURL *> *)URLs
+					delegate:(id<CDEventsManagerDelegate>)delegate
+				   onRunLoop:(NSRunLoop *)runLoop;
 
 /**
  * Returns an <code>CDEventsManager</code> object initialized with the given URLs to watch, URLs to exclude, whether events from sub-directories are ignored or not and schedules the watcher on the given run loop.
@@ -305,14 +311,14 @@ typedef void (^CDEventsEventBlock)(CDEventsManager *watcher, CDEvent *event);
  *
  * @since 1.0.0
  */
-- (id)initWithURLs:(NSArray *)URLs
-			delegate:(id<CDEventsManagerDelegate>)delegate
-		   onRunLoop:(NSRunLoop *)runLoop
-sinceEventIdentifier:(CDEventIdentifier)sinceEventIdentifier
-notificationLantency:(CFTimeInterval)notificationLatency
-ignoreEventsFromSubDirs:(BOOL)ignoreEventsFromSubDirs
-		 excludeURLs:(NSArray *)exludeURLs
- streamCreationFlags:(CDEventsEventStreamCreationFlags)streamCreationFlags;
+- (instancetype)initWithURLs:(NSArray<NSURL *> *)URLs
+					delegate:(id<CDEventsManagerDelegate>)delegate
+				   onRunLoop:(NSRunLoop *)runLoop
+		sinceEventIdentifier:(CDEventIdentifier)sinceEventIdentifier
+		notificationLantency:(CFTimeInterval)notificationLatency
+	 ignoreEventsFromSubDirs:(BOOL)ignoreEventsFromSubDirs
+				 excludeURLs:(nullable NSArray<NSURL *> *)exludeURLs
+		 streamCreationFlags:(CDEventsEventStreamCreationFlags)streamCreationFlags;
 
 #pragma mark Creating CDEventsManager Objects With a Block
 /** @name Creating CDEventsManager Objects With a Block */
@@ -342,7 +348,7 @@ ignoreEventsFromSubDirs:(BOOL)ignoreEventsFromSubDirs
  *
  * @since head
  */
-- (id)initWithURLs:(NSArray *)URLs block:(CDEventsEventBlock)block;
+- (instancetype)initWithURLs:(NSArray<NSURL *> *)URLs block:(CDEventsEventBlock)block;
 
 /**
  * Returns an <code>CDEventsManager</code> object initialized with the given URLs to watch and schedules the watcher on the given run loop.
@@ -370,9 +376,9 @@ ignoreEventsFromSubDirs:(BOOL)ignoreEventsFromSubDirs
  *
  * @since head
  */
-- (id)initWithURLs:(NSArray *)URLs
-			 block:(CDEventsEventBlock)block
-		 onRunLoop:(NSRunLoop *)runLoop;
+- (instancetype)initWithURLs:(NSArray<NSURL *> *)URLs
+					   block:(CDEventsEventBlock)block
+				   onRunLoop:(NSRunLoop *)runLoop;
 
 /**
  * Returns an <code>CDEventsManager</code> object initialized with the given URLs to watch, URLs to exclude, whether events from sub-directories are ignored or not and schedules the watcher on the given run loop.
@@ -403,14 +409,14 @@ ignoreEventsFromSubDirs:(BOOL)ignoreEventsFromSubDirs
  *
  * @since head
  */
-- (id)initWithURLs:(NSArray *)URLs
-			 block:(CDEventsEventBlock)block
-		 onRunLoop:(NSRunLoop *)runLoop
-sinceEventIdentifier:(CDEventIdentifier)sinceEventIdentifier
-notificationLantency:(CFTimeInterval)notificationLatency
-ignoreEventsFromSubDirs:(BOOL)ignoreEventsFromSubDirs
-	   excludeURLs:(NSArray *)exludeURLs
-streamCreationFlags:(CDEventsEventStreamCreationFlags)streamCreationFlags;
+- (instancetype)initWithURLs:(NSArray<NSURL *> *)URLs
+					   block:(CDEventsEventBlock)block
+				   onRunLoop:(NSRunLoop *)runLoop
+		sinceEventIdentifier:(CDEventIdentifier)sinceEventIdentifier
+		notificationLantency:(CFTimeInterval)notificationLatency
+	 ignoreEventsFromSubDirs:(BOOL)ignoreEventsFromSubDirs
+				 excludeURLs:(nullable NSArray<NSURL *> *)exludeURLs
+		 streamCreationFlags:(CDEventsEventStreamCreationFlags)streamCreationFlags NS_DESIGNATED_INITIALIZER;
 
 #pragma mark Flush methods
 /** @name Flushing Events */
@@ -452,3 +458,6 @@ streamCreationFlags:(CDEventsEventStreamCreationFlags)streamCreationFlags;
 - (NSString *)streamDescription;
 
 @end
+
+NS_ASSUME_NONNULL_END
+

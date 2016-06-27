@@ -62,6 +62,9 @@ const CDEventsEventStreamCreationFlags kCDEventsDefaultEventStreamFlags =
 
 const CDEventIdentifier kCDEventsSinceEventNow = kFSEventStreamEventIdSinceNow;
 
+const NSTimeInterval kCDEventsDefaultNotificationLatency = 3.0;
+
+const BOOL kCDEventsDefaultIgnoreEventFromSubDirs = NO;
 
 #pragma mark -
 #pragma mark Private API
@@ -76,7 +79,7 @@ const CDEventIdentifier kCDEventsSinceEventNow = kFSEventStreamEventIdSinceNow;
 
 // Redefine the properties that should be writeable.
 @property (strong, readwrite) CDEvent *lastEvent;
-@property (copy, readwrite) NSArray *watchedURLs;
+@property (copy, readwrite) NSArray<NSURL *> *watchedURLs;
 
 // The FSEvents callback function
 static void CDEventsCallback(
@@ -110,15 +113,14 @@ static void CDEventsCallback(
 
 
 #pragma mark Event identifier class methods
-+ (CDEventIdentifier)currentEventIdentifier
-{
++ (CDEventIdentifier)currentEventIdentifier {
 	return (NSUInteger)FSEventsGetCurrentEventId();
 }
 
 
 #pragma mark Init/dealloc/finalize methods
-- (void)dealloc
-{
+- (void)dealloc {
+	MDLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
 	[self disposeEventStream];
 	
 	_delegate = nil;
@@ -133,17 +135,20 @@ static void CDEventsCallback(
 	[super finalize];
 }
 
-- (id)initWithURLs:(NSArray *)URLs delegate:(id<CDEventsManagerDelegate>)delegate
-{
+- (instancetype)init {
+	return [self initWithURLs:nil delegate:nil];
+}
+
+- (instancetype)initWithURLs:(NSArray<NSURL *> *)URLs delegate:(id<CDEventsManagerDelegate>)delegate {
 	return [self initWithURLs:URLs
 					 delegate:delegate
 					onRunLoop:[NSRunLoop currentRunLoop]];
 }
 
-- (id)initWithURLs:(NSArray *)URLs
-			delegate:(id<CDEventsManagerDelegate>)delegate
-		   onRunLoop:(NSRunLoop *)runLoop
-{
+- (instancetype)initWithURLs:(NSArray<NSURL *> *)URLs
+					delegate:(id<CDEventsManagerDelegate>)delegate
+				   onRunLoop:(NSRunLoop *)runLoop {
+	
 	return [self initWithURLs:URLs
 					 delegate:delegate
 					onRunLoop:runLoop
@@ -154,18 +159,17 @@ static void CDEventsCallback(
 		  streamCreationFlags:kCDEventsDefaultEventStreamFlags];
 }
 
-- (id)initWithURLs:(NSArray *)URLs
-		  delegate:(id<CDEventsManagerDelegate>)delegate
-		 onRunLoop:(NSRunLoop *)runLoop
-sinceEventIdentifier:(CDEventIdentifier)sinceEventIdentifier
-notificationLantency:(CFTimeInterval)notificationLatency
-ignoreEventsFromSubDirs:(BOOL)ignoreEventsFromSubDirs
-	   excludeURLs:(NSArray *)exludeURLs
-streamCreationFlags:(CDEventsEventStreamCreationFlags)streamCreationFlags
-{
+- (instancetype)initWithURLs:(NSArray<NSURL *> *)URLs
+					delegate:(id<CDEventsManagerDelegate>)delegate
+				   onRunLoop:(NSRunLoop *)runLoop
+		sinceEventIdentifier:(CDEventIdentifier)sinceEventIdentifier
+		notificationLantency:(CFTimeInterval)notificationLatency
+	 ignoreEventsFromSubDirs:(BOOL)ignoreEventsFromSubDirs
+				 excludeURLs:(NSArray<NSURL *> *)exludeURLs
+		 streamCreationFlags:(CDEventsEventStreamCreationFlags)streamCreationFlags {
+	
 	if (delegate == nil) {
-		[NSException raise:NSInvalidArgumentException
-					format:@"Invalid arguments passed to CDEvents init-method."];
+		[NSException raise:NSInvalidArgumentException format:@"Invalid arguments passed to CDEvents init-method."];
 	}
 	
 	MDLog(@"[%@ %@]", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
@@ -190,15 +194,13 @@ streamCreationFlags:(CDEventsEventStreamCreationFlags)streamCreationFlags
 
 
 #pragma mark Creating CDEvents Objects With a Block
-- (id)initWithURLs:(NSArray *)URLs block:(CDEventsEventBlock)block
-{
+- (instancetype)initWithURLs:(NSArray<NSURL *> *)URLs block:(CDEventsEventBlock)block {
 	return [self initWithURLs:URLs block:block onRunLoop:[NSRunLoop currentRunLoop]];
 }
 
-- (id)initWithURLs:(NSArray *)URLs
-			 block:(CDEventsEventBlock)block
-		 onRunLoop:(NSRunLoop *)runLoop
-{
+- (instancetype)initWithURLs:(NSArray<NSURL *> *)URLs
+					   block:(CDEventsEventBlock)block
+				   onRunLoop:(NSRunLoop *)runLoop {
 	return [self initWithURLs:URLs
 						block:block
 					onRunLoop:runLoop
@@ -209,18 +211,17 @@ streamCreationFlags:(CDEventsEventStreamCreationFlags)streamCreationFlags
 		  streamCreationFlags:kCDEventsDefaultEventStreamFlags];
 }
 
-- (id)initWithURLs:(NSArray *)URLs
-			 block:(CDEventsEventBlock)block
-		 onRunLoop:(NSRunLoop *)runLoop
-sinceEventIdentifier:(CDEventIdentifier)sinceEventIdentifier
-notificationLantency:(CFTimeInterval)notificationLatency
-ignoreEventsFromSubDirs:(BOOL)ignoreEventsFromSubDirs
-	   excludeURLs:(NSArray *)exludeURLs
-streamCreationFlags:(CDEventsEventStreamCreationFlags)streamCreationFlags
-{
+- (instancetype)initWithURLs:(NSArray<NSURL *> *)URLs
+					   block:(CDEventsEventBlock)block
+				   onRunLoop:(NSRunLoop *)runLoop
+		sinceEventIdentifier:(CDEventIdentifier)sinceEventIdentifier
+		notificationLantency:(CFTimeInterval)notificationLatency
+	 ignoreEventsFromSubDirs:(BOOL)ignoreEventsFromSubDirs
+				 excludeURLs:(nullable NSArray<NSURL *> *)exludeURLs
+		 streamCreationFlags:(CDEventsEventStreamCreationFlags)streamCreationFlags {
+	
 	if (block == NULL || URLs == nil || [URLs count] == 0) {
-		[NSException raise:NSInvalidArgumentException
-					format:@"Invalid arguments passed to CDEvents init-method."];
+		[NSException raise:NSInvalidArgumentException format:@"Invalid arguments passed to CDEvents init-method."];
 	}
 	
 	if ((self = [super init])) {
@@ -288,12 +289,14 @@ streamCreationFlags:(CDEventsEventStreamCreationFlags)streamCreationFlags
 
 
 #pragma mark Misc methods
-- (NSString *)description
-{
-	return [NSString stringWithFormat:@"<%@: %p { watchedURLs = %@ }>",
-			[self className],
-			self,
-			[self watchedURLs]];
+- (NSString *)description {
+	NSMutableString *description = [NSMutableString stringWithFormat:@"<%@: %p> ", NSStringFromClass(self.class), self];
+	[description appendFormat:@", watchedURLs == {\n"];
+	for (NSURL *watchedURL in _watchedURLs) {
+		[description appendFormat:@"       \"%@\"\n", watchedURL.path];
+	}
+	[description appendFormat:@"}\n"];
+	return description;
 }
 
 - (NSString *)streamDescription

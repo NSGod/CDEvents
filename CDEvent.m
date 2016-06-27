@@ -39,12 +39,12 @@
 
 
 #pragma mark Class object creators
-+ (CDEvent *)eventWithIdentifier:(NSUInteger)identifier
++ (instancetype)eventWithIdentifier:(NSUInteger)identifier
 							date:(NSDate *)date
 							 URL:(NSURL *)URL
 						   flags:(CDEventFlags)flags
 {
-	return [[CDEvent alloc] initWithIdentifier:identifier
+	return [[[self class] alloc] initWithIdentifier:identifier
 										   date:date
 											URL:URL
 										  flags:flags];
@@ -53,7 +53,7 @@
 
 #pragma mark Init/dealloc methods
 
-- (id)initWithIdentifier:(NSUInteger)identifier
+- (instancetype)initWithIdentifier:(NSUInteger)identifier
 					date:(NSDate *)date
 					 URL:(NSURL *)URL
 				   flags:(CDEventFlags)flags
@@ -64,8 +64,11 @@
 		_date		= date;
 		_URL		= URL;
 	}
-	
 	return self;
+}
+
+- (instancetype)init {
+	return [self initWithIdentifier:0 date:[NSDate date] URL:[NSURL fileURLWithPath:[@"~/Desktop" stringByExpandingTildeInPath]] flags:0];
 }
 
 
@@ -78,7 +81,7 @@
 	[aCoder encodeObject:[self URL] forKey:@"URL"];
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (nullable instancetype)initWithCoder:(NSCoder *)aDecoder
 {
 	self = [self initWithIdentifier:[[aDecoder decodeObjectForKey:@"identifier"] unsignedIntegerValue]
 							   date:[aDecoder decodeObjectForKey:@"date"]
