@@ -136,7 +136,7 @@ typedef void (^CDEventsEventBlock)(CDEventsManager *watcher, CDEvent *event);
  *
  * @since 1.0.0
  */
-@property (unsafe_unretained) id<CDEventsManagerDelegate>	delegate;
+@property (unsafe_unretained, nullable) id<CDEventsManagerDelegate>	delegate;
 
 /** @name Getting Event Block */
 /**

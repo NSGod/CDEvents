@@ -126,14 +126,14 @@ static void CDEventsCallback(
 	_delegate = nil;
 }
 
-- (void)finalize
-{
-	[self disposeEventStream];
-	
-	_delegate = nil;
-	
-	[super finalize];
-}
+//- (void)finalize
+//{
+//	[self disposeEventStream];
+//	
+//	_delegate = nil;
+//	
+//	[super finalize];
+//}
 
 - (instancetype)init {
 	return [self initWithURLs:nil delegate:nil];
